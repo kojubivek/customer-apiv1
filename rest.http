@@ -1,0 +1,26 @@
+@url = http://localhost:6000/api/v1
+
+
+#creating new user
+POST {{url}}/client/register
+Content-Type: application/json
+
+{
+ "address": "", 
+"email": "aba@sdf.com",
+"fName":"asfasfs",
+"lName": "asdfasdfas",
+"password": "afdasDF@#24",
+"phone": null
+}
+
+
+### login User
+
+POST {{url}}/client/login
+Content-Type: application/json
+
+{
+    "email": "aba@sdf.com",
+    "password": "afdasDF@#24"
+}
