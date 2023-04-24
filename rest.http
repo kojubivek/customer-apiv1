@@ -1,4 +1,4 @@
-@url = http://localhost:6000/api/v1
+@url = http://localhost:8001/api/v1
 
 
 #creating new user
@@ -24,3 +24,10 @@ Content-Type: application/json
     "email": "aba@sdf.com",
     "password": "afdasDF@#24"
 }
+
+
+### get categories
+
+GET   {{url}}/category
+
+
