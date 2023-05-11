@@ -19,10 +19,13 @@ async function init() {
     throw new Error("Failed to connect to db");
   }
 }
-router.get("/", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   await init();
   try {
-    const cat = await category.find({}).toArray();
+    const data = await req.body;
+
+    const cat = await category.find(data).toArray();
+
     res.json({
       status: "success",
       message: "get all category list ",
@@ -32,12 +35,5 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-// router.get("/:_id?", async (req, res, nex)=>{
-//     try {
-//         const{_id}= req.params;
-//         const prods = await products.find({parentCat: _id}).toArray()
-//         const products = _id? await product.find(f)
-//     } catch (error) {
-//     }
-// })
+
 export default router;

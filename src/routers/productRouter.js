@@ -1,5 +1,6 @@
 import express from "express";
 import clientPromise from "../config/dbConfing.js";
+import mongoose from "mongoose";
 const router = express.Router();
 let db;
 let client;
@@ -9,12 +10,33 @@ async function init() {
   try {
     client = await clientPromise;
     db = await client.db();
-    products = await db.collection("proudcts");
+    products = await db.collection("products");
     db && console.log("Mongo db connected!");
   } catch (error) {
     throw new Error("Failed to connect to db");
   }
 }
+
+router.get("/:_id?", async (req, res, nex) => {
+  await init();
+  try {
+    const { _id } = req.params;
+    const ObjectId = mongoose.Types.ObjectId;
+    const catId = new ObjectId(_id);
+    console.log(catId, "params");
+    const prods = await products
+      .find({ parentCat: catId, status: "active" })
+      .toArray();
+
+    res.json({
+      status: "success",
+      message: "Scuccessful",
+      prods,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
 router.get("/", async (req, res, next) => {
   await init();
   try {
@@ -26,15 +48,6 @@ router.get("/", async (req, res, next) => {
     });
   } catch (error) {
     next(error);
-  }
-});
-router.get("/:_id?", async (req, res, nex) => {
-  try {
-    const { _id } = req.params;
-    const prods = await products.find({ parentCat: _id }).toArray();
-    const products = _id ? await product.find(f) : next();
-  } catch (error) {
-    console.log("error");
   }
 });
 

@@ -28,6 +28,7 @@ Content-Type: application/json
 
 ### get categories
 
-GET   {{url}}/category
+GET   {{url}}/product
+
 
 
